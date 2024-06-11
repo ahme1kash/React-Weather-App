@@ -113,13 +113,12 @@ const Weather = () => {
             search(inputRef.current.value, inputRef2.current.value)
           }
           style={{
-            width: "4vw",
-            height: "8vh",
+            width: "4em",
+            height: "4em",
             backgroundColor: "#f5faf5",
             borderRadius: "50%",
             padding: "10px",
             cursor: "pointer",
-            // gap: "2px",
             margin: "1em 8.5em",
           }}
           alt="search-icons"
