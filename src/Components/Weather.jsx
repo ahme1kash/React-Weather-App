@@ -10,6 +10,7 @@ import snow_icon from "../assets/snow.png";
 import wind_icon from "../assets/wind.png";
 const Weather = () => {
   const inputRef = useRef();
+  const inputRef2 = useRef();
   const [weatherData, setWeatherData] = useState(false);
   const allIcons = {
     "01d": clear_icon,
@@ -27,16 +28,19 @@ const Weather = () => {
     "13d": snow_icon,
     "13n": snow_icon,
   };
-  const search = async (city) => {
+  const search = async (city, key) => {
     if (city === "") {
       alert("Enter City Name to Check Weather");
       return;
     }
+    if (key === "") {
+      alert("Eneter Open Weather API Key");
+      return;
+    }
 
+    // import.meta.env.VITE_WetherAPI
     try {
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${
-        import.meta.env.VITE_WetherAPI
-      }`;
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${key}`;
       const response = await fetch(url);
       const data = await response.json();
       if (!response.ok) {
@@ -59,11 +63,31 @@ const Weather = () => {
     }
   };
   useEffect(() => {
-    search("Fatehpur");
+    search("Fatehpur", "0811ed55c31d12e9ef63b677ed88f5a9");
   }, []);
   return (
     <div className="weather">
       <div className="search-bar">
+        <input
+          type="text"
+          class="key"
+          placeholder="openweathermap-APi-Key"
+          ref={inputRef2}
+          style={{
+            borderRadius: "50px",
+            border: "solid",
+            outline: "none",
+            width: "20em",
+            height: "4em",
+            textAlign: "center",
+            display: "flex",
+            color: "red",
+            background: "#fefefe",
+            fontSize: "15px",
+            marginLeft: "1.4em",
+          }}
+        />
+        <br></br>
         <input
           type="text"
           placeholder="Search"
@@ -75,7 +99,7 @@ const Weather = () => {
             width: "15em",
             height: "3em",
             textAlign: "center",
-            display: "flex",
+            // display: "flex",
             color: "red",
             background: "#fefefe",
             fontSize: "20px",
@@ -85,16 +109,18 @@ const Weather = () => {
         <img
           className="search-pic"
           src={search_icon}
-          onClick={() => search(inputRef.current.value)}
+          onClick={() =>
+            search(inputRef.current.value, inputRef2.current.value)
+          }
           style={{
-            width: "4em",
-            height: "4em",
+            width: "4vw",
+            height: "8vh",
             backgroundColor: "#f5faf5",
-
             borderRadius: "50%",
-
             padding: "10px",
             cursor: "pointer",
+            // gap: "2px",
+            margin: "1em 8.5em",
           }}
           alt="search-icons"
         />
@@ -108,14 +134,14 @@ const Weather = () => {
             <div className="col">
               <img src={humidity_icon} alt="" />
               <div>
-                <p>{weatherData.humidity}</p>
+                <p>{weatherData.humidity} %rh</p>
                 <span>Humidity</span>
               </div>
             </div>
             <div className="col">
               <img src={wind_icon} alt="" />
               <div>
-                <p>{weatherData.windSpeed}</p>
+                <p>{weatherData.windSpeed} km/hr</p>
                 <span>Wind Speed</span>
               </div>
             </div>
