@@ -90,7 +90,7 @@ const Weather = () => {
         <br></br>
         <input
           type="text"
-          placeholder="Search"
+          placeholder="Search Any City"
           ref={inputRef}
           style={{
             borderRadius: "50px",
